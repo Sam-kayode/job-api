@@ -14,7 +14,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       .map((item) => item.message)
       .join(",");
     customError.statusCode = 400;
-  }c
+  }
 
   if (err.code && err.code == 11000) {
     customError.msg = `Duplicate value enteres for ${Objet.keys(
