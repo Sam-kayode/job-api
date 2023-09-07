@@ -5,6 +5,7 @@ const { UnauthenticatedError } = require("../errors/index");
 const authenticationMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer")) {
+    conole.log("first wahala");
     throw new UnauthenticatedError("Authentication Invalid");
   }
   const token = authHeader.split(" ")[1];
