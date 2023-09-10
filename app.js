@@ -25,8 +25,8 @@ app.set(" trust proxy", 1);
 app.use(
   rateLimiter(
     rateLimiter({
-      windows:15*60*1000, // 15 minutes
-      max:100, // limit each IP to 100 requests per windowMS
+      windows: 15 * 60 * 1000, // 15 minutes
+      max: 100, // limit each IP to 100 requests per windowMS
     })
   )
 );
@@ -35,10 +35,18 @@ app.use(
 //connect DB
 const connectDB = require("./db/connect");
 
+// /swagger
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./swagger.yaml");
+
 // routes
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send('<h1>Jobs API</h1><a href="/api-docs">Documentation</a>');
 });
+app.use("/api-use", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+// routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authenticateUser, jobsRouter);
 
